@@ -1,6 +1,6 @@
 "use client"
 
-import { Center, Text, Image, Flex, Grid, GridItem, SimpleGrid, Button, Box, Card } from '@chakra-ui/react'
+import { Center, Text, Image, Flex, Grid, GridItem, extendTheme, Button, Box, Card, SimpleGrid } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 
 export default function Home() {
@@ -13,6 +13,16 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
 
   const axios = require('axios');
+
+  const breakpoints = {
+    sm: '320px',
+    md: '768px',
+    lg: '960px',
+    xl: '1200px',
+    '2xl': '1536px',
+  }
+
+  const theme = extendTheme({ breakpoints })
 
   useEffect(() => {
     setIsLoading(true); // Ativar estado isLoading
@@ -65,12 +75,12 @@ export default function Home() {
       <Flex borderX={'solid gray 10px'} position='fixed' left={'0'} bg='lightgray' w='20%' h='100%' direction={'column'} justifyContent='center'>
         <Image
           w='200px'
-          mb='50px'
+          my='50px'
           alignSelf={'center'}
           src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/International_Pok%C3%A9mon_logo.svg/1200px-International_Pok%C3%A9mon_logo.svg.png'
           alt='Imagem não encontrada' />
         {places ? places.map((region, id) => (
-          <Button mx='10px' p='10px' fontSize={'18px'} mb='8px' borderRadius={'10px'} key={id}
+          <Button mx='10px' p='5px' fontSize={'16px'} mb='7px' borderRadius={'10px'} key={id}
             onClick={() => handleRegion(region)} _hover={{ bg: 'white' }}
             {...id >= 7 && (
               { isDisabled: true, _hover: { bg: 'transparent' } }
@@ -114,25 +124,24 @@ export default function Home() {
           <Text fontSize={'28'} fontWeight='600' my='40px'>Gotta catch them all</Text>
         </Center>
         <Flex w='100%' justifyContent={'center'}>
-          <SimpleGrid columns={[3, null, 5]} h='70vh' w='90vw' overflowY={'scroll'}>
-            {isLoading && <Text>Carregando...</Text>}
+          <SimpleGrid column={{sm:'repeat(2, 1fr)', md:'repeat(3, 1fr)', lg:'repeat(4, 1fr)'}} gap={25}>
+            {isLoading && <Text fontSize={'18px'}>Carregando...</Text>}
             {!isLoading && poke ? poke.map((pokemon) => (
-              <Card key={pokemon.id} mb='30px' bg='black' w='190px' h='255px' borderRadius='12px' boxShadow={'0 5px 10px rgba(0, 0, 0, 0.5)'}>
-                <Text textAlign={'center'} fontSize={'14px'} my='15px' color='white'>{pokemon.name.toUpperCase()}</Text>
-                <Image
-                  border='solid 11px lightgray'
-                  alignSelf={'center'}
-                  bg='white'
-                  w='130px'
-                  h='130px'
-                  src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-vii/ultra-sun-ultra-moon/${pokemon.id}.png`}
-                  alt='Imagem não encontrada' />
-                <Grid borderX={'solid 18px black'} mt='10px'>
-                  <GridItem py='5px' fontSize={'14px'} fontWeight={'700'}>
-                    <Flex direction='row' bg='white' h='25px' justifyContent={'space-evenly'}>
-                      {...pokemon.types && pokemon.types.map((poke) => (
-                        <Center key={poke.slot}>
-                        <Text 
+              <GridItem key={pokemon.id}>
+                <Card mb='30px' bg='black' w='190px' h='255px' borderRadius='12px' boxShadow={'0 5px 10px rgba(0, 0, 0, 0.5)'}>
+                  <Text textAlign={'center'} fontSize={'14px'} my='15px' color='white'>{pokemon.name.toUpperCase()}</Text>
+                  <Image
+                    border='solid 11px lightgray'
+                    alignSelf={'center'}
+                    bg='white'
+                    w='130px'
+                    h='130px'
+                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-vii/ultra-sun-ultra-moon/${pokemon.id}.png`}
+                    alt='Imagem não encontrada' />
+                  <Flex direction='row' py='5px' fontSize={'14px'} fontWeight={'700'} borderX={'solid 18px black'} mt='10px' bg='white' h='25px' justifyContent={'space-evenly'}>
+                    {...pokemon.types && pokemon.types.map((poke) => (
+                      <Center key={poke.slot}>
+                        <Text
                           {...poke.type.name === 'bug' && ({ color: 'darkseagreen' })}
                           {...poke.type.name === 'dark' && ({ color: 'black' })}
                           {...poke.type.name === 'dragon' && ({ color: 'mediumpurple' })}
@@ -152,11 +161,10 @@ export default function Home() {
                           {...poke.type.name === 'steel' && ({ color: 'silver' })}
                           {...poke.type.name === 'water' && ({ color: 'blue' })}
                         >{poke.type.name.toUpperCase()}</Text></Center>
-                      ))}
-                    </Flex>
-                  </GridItem>
-                </Grid>
-              </Card>
+                    ))}
+                  </Flex>
+                </Card>
+              </GridItem>
             )) : null}
           </SimpleGrid>
         </Flex>

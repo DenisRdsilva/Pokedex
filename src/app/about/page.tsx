@@ -5,7 +5,7 @@ import { Image, Flex, Center, Text, Spacer, HStack } from '@chakra-ui/react'
 
 export default function About() {
   return (
-    <Flex direction='column' mt='60px'>
+    <Flex direction='column' mt='50px'>
       <Center>
         <Text fontSize={'28px'} fontWeight='600' mt='40px'>About this project</Text>
       </Center>
