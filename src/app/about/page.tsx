@@ -1,19 +1,17 @@
 "use client"
 
-import { Image, Flex, Center, Text, Spacer, HStack } from '@chakra-ui/react'
+import { Center, Flex, Image, Text } from '@chakra-ui/react'
 //import styles from './page.module.css'
 
 export default function About() {
   return (
-    <Flex direction='column' mt='50px'>
+    <Flex direction='row' h="100vh" alignItems="center" justifyContent="center">
+      <Flex w='400px' direction={'column'} alignItems='center' justifyContent="center">
+        <Text fontSize={'28px'} fontWeight='600'>About this project</Text>
+        <Text textAlign={'center'} fontSize={'22px'}>I'm a huge fan of the pokemon franchise and I wanna become a Front-End Developer, so I decided to make my own pokedex for practicing and that's how this project was born. I used Next.JS and Chakra UI</Text>
+      </Flex>
       <Center>
-        <Text fontSize={'28px'} fontWeight='600' mt='40px'>About this project</Text>
-      </Center>
-      <Center>
-        <Flex w='400px' direction={'column'} alignItems='center'>
-          <Text textAlign={'center'} fontSize={'22px'} mb='10px'>I'm a huge fan of the pokemon franchise and I wanna become a Front-End Developer, so why do not to make my own pokedex while I'm practicing? That's how this project was born. Also I used Next.JS and Chakra UI in it</Text>
-          <Image src='/grimm.png' w='400px' />
-        </Flex>
+        <Image src='/grimm.png' w='400px' />
       </Center>
     </Flex>
   )

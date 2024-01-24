@@ -1,16 +1,17 @@
 "use client"
 
-import { Center, Text, Image, Flex, Grid, GridItem, extendTheme, Button, Box, Card, SimpleGrid } from '@chakra-ui/react'
-import { useEffect, useState } from 'react'
+import { Button, Card, Center, extendTheme, Flex, GridItem, Image, SimpleGrid, Text } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
 
 export default function Home() {
 
-  const [pokes, setPokes] = useState([]);
   const [poke, setPoke] = useState([]);
-  //const [regions, setRegions] = useState('');
-  const [minpoke, setMinPoke] = useState('');
-  const [maxpoke, setMaxPoke] = useState(151);
+  const [regions, setRegions] = useState("");
+  const [minLimit, setMinLimit] = useState(0);
+  const [maxLimit, setMaxLimit] = useState(151);
   const [isLoading, setIsLoading] = useState(false);
+
+  const places = ['Kanto', 'Johto', 'Hoenn', 'Sinnoh', 'Unova', 'Kalos', 'Alola', 'Galar', 'Hisui', 'Paldea']
 
   const axios = require('axios');
 
@@ -25,79 +26,23 @@ export default function Home() {
   const theme = extendTheme({ breakpoints })
 
   useEffect(() => {
-    setIsLoading(true); // Ativar estado isLoading
+    setIsLoading(true);
     getPokes();
   }, []);
 
-  function SideMenu() {
-
-    const places = ['Kanto', 'Johto', 'Hoenn', 'Sinnoh', 'Unova', 'Kalos', 'Alola', 'Galar', 'Hisui', 'Paldea']
-
-    function handleRegion(region) {
-
-      if (region === places[0]) {
-        setMinPoke('')
-        setMaxPoke(151)
-      } else if (region === places[1]) {
-        setMinPoke('offset=151&')
-        setMaxPoke(100)
-      } else if (region === places[2]) {
-        setMinPoke('offset=251&')
-        setMaxPoke(135)
-      } else if (region === places[3]) {
-        setMinPoke('offset=386&')
-        setMaxPoke(107)
-      } else if (region === places[4]) {
-        setMinPoke('offset=493&')
-        setMaxPoke(156)
-      } else if (region === places[5]) {
-        setMinPoke('offset=649&')
-        setMaxPoke(72)
-      } else if (region === places[6]) {
-        setMinPoke('offset=721&')
-        setMaxPoke(88)
-      } else if (region === places[7]) {
-        setMinPoke('offset=809&')
-        setMaxPoke(89)
-      }
-      // else if (region === 'Hisui') {
-      //   //setMinPoke('offset=898&')
-      //   //setMaxPoke('')
-      // } else if (region === 'Paldea') {
-      //   //setMinPoke('offset=251&')
-      //   //setMaxPoke('')
-      // }
-      setIsLoading(true); // Ativar estado isLoading
-      getPokes();
-    }
-
-    return (
-      <Flex borderX={'solid gray 10px'} position='fixed' left={'0'} bg='lightgray' w='20%' h='100%' direction={'column'} justifyContent='center'>
-        <Image
-          w='200px'
-          my='50px'
-          alignSelf={'center'}
-          src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/International_Pok%C3%A9mon_logo.svg/1200px-International_Pok%C3%A9mon_logo.svg.png'
-          alt='Imagem não encontrada' />
-        {places ? places.map((region, id) => (
-          <Button mx='10px' p='5px' fontSize={'16px'} mb='7px' borderRadius={'10px'} key={id}
-            onClick={() => handleRegion(region)} _hover={{ bg: 'white' }}
-            {...id >= 7 && (
-              { isDisabled: true, _hover: { bg: 'transparent' } }
-            )}
-          >{region}</Button>
-        )) : null}
-      </Flex>
-    )
-  }
+  useEffect(() => {
+    getPokes();
+  }, [regions]);
 
   async function getPokes() {
 
     try {
-      const response = await axios.get(`https://pokeapi.co/api/v2/pokemon?${minpoke}limit=${maxpoke}`);
+      const quantity = maxLimit - minLimit;
+      console.log(quantity);
 
+      const response = await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=${quantity}&offset=${minLimit}`);
       const data = response.data;
-      setPokes(data.results);
+      console.log(data);
 
       const promises = data.results.map(pokemon => {
         return axios.get(pokemon.url);
@@ -105,26 +50,71 @@ export default function Home() {
 
       Promise.all(promises).then(results => {
         const dataArray = results.map(result => result.data);
+
         setPoke(dataArray);
       }).catch(error => {
         console.log(error);
       });
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false); // Desativar estado isLoading
     }
-
-    setIsLoading(false); // Desativar estado isLoading
   }
 
   return (
-    <Flex direction='row'>
-      <SideMenu />
+    <Flex direction='row' mb='60px'>
+      <Flex borderX={'solid gray 10px'} pt={"4%"} position='fixed' left={'0'} bg='lightgray' w='20%' h='100%' direction={'column'} justifyContent='start'>
+        <Image
+          w='150px'
+          my='20px'
+          alignSelf={'center'}
+          src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/International_Pok%C3%A9mon_logo.svg/1200px-International_Pok%C3%A9mon_logo.svg.png'
+          alt='Imagem não encontrada' />
+        {places ? places.map((region, id) => (
+          <Button mx='10px' p='5px' fontSize={'16px'} mb='7px' borderRadius={'10px'} key={id}
+            onClick={() => {
+              setIsLoading(true);
+              setRegions(region);
+              if (region === places[0]) {
+                setMinLimit(0);
+                setMaxLimit(151);
+              } else if (region === places[1]) {
+                setMinLimit(151);
+                setMaxLimit(251);
+              } else if (region === places[2]) {
+                setMinLimit(251);
+                setMaxLimit(386);
+              } else if (region === places[3]) {
+                setMinLimit(386);
+                setMaxLimit(493);
+              } else if (region === places[4]) {
+                setMinLimit(493);
+                setMaxLimit(649);
+              } else if (region === places[5]) {
+                setMinLimit(649);
+                setMaxLimit(721);
+              } else if (region === places[6]) {
+                setMinLimit(721);
+                setMaxLimit(809);
+              } else if (region === places[7]) {
+                setMinLimit(809);
+                setMaxLimit(898);
+              }
+            }}
+            _hover={{ bg: 'white' }}
+            {...id > 7 && (
+              { isDisabled: true, _hover: { bg: 'transparent' } }
+            )}
+          >{region}</Button>
+        )) : null}
+      </Flex>
       <Flex ml='26%' direction='column' w='70%'>
         <Center mt='60px'>
           <Text fontSize={'28'} fontWeight='600' my='40px'>Gotta catch them all</Text>
         </Center>
         <Flex w='100%' justifyContent={'center'}>
-          <SimpleGrid column={{sm:'repeat(2, 1fr)', md:'repeat(3, 1fr)', lg:'repeat(4, 1fr)'}} gap={25}>
+          <SimpleGrid templateColumns={'repeat(4, 1fr)'} gap={25}>
             {isLoading && <Text fontSize={'18px'}>Carregando...</Text>}
             {!isLoading && poke ? poke.map((pokemon) => (
               <GridItem key={pokemon.id}>
@@ -136,7 +126,7 @@ export default function Home() {
                     bg='white'
                     w='130px'
                     h='130px'
-                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-vii/ultra-sun-ultra-moon/${pokemon.id}.png`}
+                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`}
                     alt='Imagem não encontrada' />
                   <Flex direction='row' py='5px' fontSize={'14px'} fontWeight={'700'} borderX={'solid 18px black'} mt='10px' bg='white' h='25px' justifyContent={'space-evenly'}>
                     {...pokemon.types && pokemon.types.map((poke) => (
@@ -172,30 +162,3 @@ export default function Home() {
     </Flex >
   );
 }
-
-
-function handleRegion(arg0: () => void) {
-  throw new Error('Function not implemented.');
-}
-/*
-export default function Home(props) {
-  const { pokemons } = props
-
-  return (
-    <>
-      <Center>
-        <Text fontSize={'22'}>Gotta catch them all</Text>
-      </Center>
-      <Flex>
-        <List>
-          {pokemons ? pokemons.map((pokemon) => (
-            <ListItem key={pokemon.id}>
-              {pokemon.name}
-            </ListItem>
-          )) : null}
-        </List>
-      </Flex>
-    </>
-  )
-}
-*/
