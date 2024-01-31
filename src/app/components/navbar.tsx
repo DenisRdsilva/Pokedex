@@ -16,7 +16,7 @@ export default function Navbar() {
             <Spacer />
             <Flex pr='35'>
                 <Center>
-                    <HStack spacing={'20'}>
+                    <HStack spacing={{sm: '15px', md: '20'}}>
                         <Link href='/'><Text color='white' fontSize={'18px'} _hover={{ borderBottom: "solid 1px white" }} >Home</Text></Link>
                         <Link href='/about'><Text color='white' fontSize={'18px'} _hover={{ borderBottom: "solid 1px white" }}>About</Text></Link>
                     </HStack>

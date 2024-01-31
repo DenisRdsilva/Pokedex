@@ -57,14 +57,15 @@ export default function Home() {
       <Flex borderX={'solid gray 10px'} pt={"4%"} pb={{sm:'10px', md: '0px'}} position='fixed' left={'0'} bg='lightgray' w={{ sm: '100%', md: '20%' }} zIndex='10' direction={'column'} justifyContent='start'>
         <Image
           w='150px'
+          h={{sm: '0px', md: 'auto'}}
           my={{ sm: '20px', md: '20px' }}
           pt={{ sm: '25px' }}
           alignSelf={'center'}
           src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/International_Pok%C3%A9mon_logo.svg/1200px-International_Pok%C3%A9mon_logo.svg.png'
           alt='Imagem não encontrada' />
-        <SimpleGrid templateColumns={{ sm: 'repeat(5, 80px)', md: '1fr' }} overflowX={'hidden'} gap={'10px'} justifyContent='center'>
+        <SimpleGrid templateColumns={{ sm: 'repeat(4, 70px)', md: '1fr' }} overflowX={'hidden'} gap={'10px'} justifyContent='center'>
           {places ? places.map((region, id) => (
-            <Button mx={{ sm: '0px', md: '10px' }} p='5px' w={{ sm: '80px', md: 'auto' }} fontSize={'16px'} mb='7px' borderRadius={'10px'} key={id}
+            <Button mx={{ sm: '0px', md: '10px' }} p='5px' w={{ sm: '70px', md: 'auto' }} fontSize={'16px'} mb='7px' borderRadius={'10px'} key={id}
               onClick={() => {
                 setIsLoading(true);
                 setRegions(region);
@@ -107,18 +108,18 @@ export default function Home() {
           <Text fontSize={'28'} fontWeight='600' my='40px'>Gotta catch them all</Text>
         </Center>
         <Flex w='100%' mt={{sm: '100px', md: '0'}} justifyContent={'center'}>
-          <SimpleGrid templateColumns={{ sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' }} gap={25}>
+          <SimpleGrid templateColumns={{ sm: '1fr', md: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' }} gap={25}>
             {isLoading && <Text fontSize={'18px'}>Carregando...</Text>}
             {!isLoading && poke ? poke.map((pokemon) => (
               <GridItem key={pokemon.id}>
-                <Card mb='30px' bg='black' w='190px' h='255px' borderRadius='12px' boxShadow={'0 5px 10px rgba(0, 0, 0, 0.5)'}>
+                <Card mb={{sm: '0px', md: '30px'}} bg='black' w={{sm: '70vw', md: '190px'}} h={{sm: '310px', md: '255px'}} borderRadius='12px' boxShadow={'0 5px 10px rgba(0, 0, 0, 0.5)'}>
                   <Text textAlign={'center'} fontSize={'14px'} my='15px' color='white'>{pokemon.name.toUpperCase()}</Text>
                   <Image
                     border='solid 11px lightgray'
                     alignSelf={'center'}
                     bg='white'
-                    w='130px'
-                    h='130px'
+                    w={{sm: '75%', md: '130px'}}
+                    h={{sm: 'auto', md: '130px'}}
                     src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`}
                     alt='Imagem não encontrada' />
                   <Flex direction='row' py='5px' fontSize={'14px'} fontWeight={'700'} borderX={'solid 18px black'} mt='10px' bg='white' h='25px' justifyContent={'space-evenly'}>
