@@ -1,14 +1,20 @@
 "use client"
 
-import './globals.css'
-import Navbar from './components/navbar'
-import Footer from './components/footer'
-import { Inter } from 'next/font/google'
 import { Flex } from '@chakra-ui/react'
+import { Inter } from 'next/font/google'
+import Footer from './components/footer'
+import Navbar from './components/navbar'
+import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
 
-export default function RootLayout({ children }) {
+import { Providers } from './providers'
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode,
+}) {
   return (
     <html lang="en">
       <head>
@@ -17,11 +23,13 @@ export default function RootLayout({ children }) {
         </title>
       </head>
       <body>
-        <Flex fontFamily={'Century'} direction='column'>
-          <Navbar />
-          <main>{children}</main>
-          <Footer />
-        </Flex>
+        <Providers>
+          <Flex fontFamily={'Century'} direction='column'>
+            <Navbar />
+            <main>{children}</main>
+            <Footer />
+          </Flex>
+        </Providers>
       </body>
     </html>
   )

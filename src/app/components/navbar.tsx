@@ -6,7 +6,7 @@ import Link from 'next/link'
 
 export default function Navbar() {
     return (
-        <Flex position='fixed' direction={'row'} bg='black' w='100%' h='60px' zIndex={'5'}>
+        <Flex position='fixed' direction={'row'} bg='black' w='100%' h='60px' zIndex={'11'}>
             <Flex pl='35'>
                 <Center>
                     <Image src='/pokeball.png' w='27' h='27' />

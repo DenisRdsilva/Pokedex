@@ -1,6 +1,6 @@
 "use client"
 
-import { Button, Card, Center, extendTheme, Flex, GridItem, Image, SimpleGrid, Text } from '@chakra-ui/react';
+import { Button, Card, Center, Flex, GridItem, Image, SimpleGrid, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 
 export default function Home() {
@@ -14,16 +14,6 @@ export default function Home() {
   const places = ['Kanto', 'Johto', 'Hoenn', 'Sinnoh', 'Unova', 'Kalos', 'Alola', 'Galar', 'Hisui', 'Paldea']
 
   const axios = require('axios');
-
-  const breakpoints = {
-    sm: '320px',
-    md: '768px',
-    lg: '960px',
-    xl: '1200px',
-    '2xl': '1536px',
-  }
-
-  const theme = extendTheme({ breakpoints })
 
   useEffect(() => {
     setIsLoading(true);
@@ -63,58 +53,61 @@ export default function Home() {
   }
 
   return (
-    <Flex direction='row' mb='60px'>
-      <Flex borderX={'solid gray 10px'} pt={"4%"} position='fixed' left={'0'} bg='lightgray' w='20%' h='100%' direction={'column'} justifyContent='start'>
+    <Flex direction={{ sm: 'column', md: 'row' }} mb={{sm: '50px', md: '60px'}}>
+      <Flex borderX={'solid gray 10px'} pt={"4%"} pb={{sm:'10px', md: '0px'}} position='fixed' left={'0'} bg='lightgray' w={{ sm: '100%', md: '20%' }} zIndex='10' direction={'column'} justifyContent='start'>
         <Image
           w='150px'
-          my='20px'
+          my={{ sm: '20px', md: '20px' }}
+          pt={{ sm: '25px' }}
           alignSelf={'center'}
           src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/International_Pok%C3%A9mon_logo.svg/1200px-International_Pok%C3%A9mon_logo.svg.png'
           alt='Imagem não encontrada' />
-        {places ? places.map((region, id) => (
-          <Button mx='10px' p='5px' fontSize={'16px'} mb='7px' borderRadius={'10px'} key={id}
-            onClick={() => {
-              setIsLoading(true);
-              setRegions(region);
-              if (region === places[0]) {
-                setMinLimit(0);
-                setMaxLimit(151);
-              } else if (region === places[1]) {
-                setMinLimit(151);
-                setMaxLimit(251);
-              } else if (region === places[2]) {
-                setMinLimit(251);
-                setMaxLimit(386);
-              } else if (region === places[3]) {
-                setMinLimit(386);
-                setMaxLimit(493);
-              } else if (region === places[4]) {
-                setMinLimit(493);
-                setMaxLimit(649);
-              } else if (region === places[5]) {
-                setMinLimit(649);
-                setMaxLimit(721);
-              } else if (region === places[6]) {
-                setMinLimit(721);
-                setMaxLimit(809);
-              } else if (region === places[7]) {
-                setMinLimit(809);
-                setMaxLimit(898);
-              }
-            }}
-            _hover={{ bg: 'white' }}
-            {...id > 7 && (
-              { isDisabled: true, _hover: { bg: 'transparent' } }
-            )}
-          >{region}</Button>
-        )) : null}
+        <SimpleGrid templateColumns={{ sm: 'repeat(5, 80px)', md: '1fr' }} overflowX={'hidden'} gap={'10px'} justifyContent='center'>
+          {places ? places.map((region, id) => (
+            <Button mx={{ sm: '0px', md: '10px' }} p='5px' w={{ sm: '80px', md: 'auto' }} fontSize={'16px'} mb='7px' borderRadius={'10px'} key={id}
+              onClick={() => {
+                setIsLoading(true);
+                setRegions(region);
+                if (region === places[0]) {
+                  setMinLimit(0);
+                  setMaxLimit(151);
+                } else if (region === places[1]) {
+                  setMinLimit(151);
+                  setMaxLimit(251);
+                } else if (region === places[2]) {
+                  setMinLimit(251);
+                  setMaxLimit(386);
+                } else if (region === places[3]) {
+                  setMinLimit(386);
+                  setMaxLimit(493);
+                } else if (region === places[4]) {
+                  setMinLimit(493);
+                  setMaxLimit(649);
+                } else if (region === places[5]) {
+                  setMinLimit(649);
+                  setMaxLimit(721);
+                } else if (region === places[6]) {
+                  setMinLimit(721);
+                  setMaxLimit(809);
+                } else if (region === places[7]) {
+                  setMinLimit(809);
+                  setMaxLimit(898);
+                }
+              }}
+              _hover={{ bg: 'white' }}
+              {...id > 7 && (
+                { isDisabled: true, _hover: { bg: 'transparent' } }
+              )}
+            >{region}</Button>
+          )) : null}
+        </SimpleGrid>
       </Flex>
-      <Flex ml='26%' direction='column' w='70%'>
+      <Flex borderX={{ sm: 'solid gray 10px', md: 'none' }} bg={{ sm: 'lightgray', md: 'white' }} ml={{ sm: '0px', md: '26%' }} direction='column' w={{ sm: '100%', md: '70%' }} >
         <Center mt='60px'>
           <Text fontSize={'28'} fontWeight='600' my='40px'>Gotta catch them all</Text>
         </Center>
-        <Flex w='100%' justifyContent={'center'}>
-          <SimpleGrid templateColumns={'repeat(4, 1fr)'} gap={25}>
+        <Flex w='100%' mt={{sm: '100px', md: '0'}} justifyContent={'center'}>
+          <SimpleGrid templateColumns={{ sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' }} gap={25}>
             {isLoading && <Text fontSize={'18px'}>Carregando...</Text>}
             {!isLoading && poke ? poke.map((pokemon) => (
               <GridItem key={pokemon.id}>

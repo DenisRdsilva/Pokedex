@@ -3,7 +3,7 @@ import RootLayout from "./layout";
 function MyApp({ Component, pageProps }) {
     return (
         <RootLayout>
-            <Component {...pageProps}/>
+            <Component {...pageProps} />
         </RootLayout>
     )
 }
