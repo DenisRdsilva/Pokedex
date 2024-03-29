@@ -1,3 +1,4 @@
+import React from "react";
 import RootLayout from "./layout";
 
 function MyApp({ Component, pageProps }) {

@@ -1,6 +1,7 @@
 'use client'
 
 import { ChakraProvider, extendTheme } from '@chakra-ui/react'
+import React from 'react'
 
 export function Providers({ children }: { children: React.ReactNode }) {
     

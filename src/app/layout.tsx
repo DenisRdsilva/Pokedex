@@ -8,6 +8,7 @@ import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
 
+import React from 'react'
 import { Providers } from './providers'
 
 export default function RootLayout({
