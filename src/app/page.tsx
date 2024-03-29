@@ -104,10 +104,10 @@ export default function Home() {
         </Flex>
         <Flex w='100%' mt={{ sm: '40px', lg: '0' }} justifyContent={'center'} alignItems={'center'}>
           <SimpleGrid templateColumns={{ sm: '1fr', md: 'repeat(3, 1fr)', lg: 'repeat(4, 1fr)', xl: 'repeat(5, 1fr)' }} gap={'25px'}>
-            {isLoading &&<Text fontSize={'18px'}>Carregando...</Text>}
+            {isLoading && <Text fontSize={'18px'}>Carregando...</Text>}
             {!isLoading && poke ? poke.map((pokemon) => (
               <GridItem key={pokemon.id}>
-                  <Link href={`/details/${pokemon.id}`} ><Card justifyContent='center' mb={{ sm: '0px', md: '30px' }} bg='black' w={{ sm: 'auto', md: '190px' }} h={{ sm: 'auto', md: '255px' }} borderRadius='12px' boxShadow={'0 5px 10px rgba(0, 0, 0, 0.5)'}>
+                <Link href="/details/[index]" as={`/details/${pokemon.id}`} ><Card justifyContent='center' mb={{ sm: '0px', md: '30px' }} bg='black' w={{ sm: 'auto', md: '190px' }} h={{ sm: 'auto', md: '255px' }} borderRadius='12px' boxShadow={'0 5px 10px rgba(0, 0, 0, 0.5)'}>
                   <Flex direction={{ sm: 'row', md: 'column' }}>
                     <Image
                       border='solid 11px lightgray'
