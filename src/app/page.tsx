@@ -181,8 +181,8 @@ export default function Home() {
                   </Flex>
                 </Card></Center>
               {/* </Flex> */}
-              <Card m="25px" justifyContent={"center"} alignItems={"center"}>
-                <SimpleGrid templateColumns={{ sm: "repeat(2, 130px)", md: "repeat(2, 200px)" }} spacing={"15px"}>
+              <Card m="25px" justifyContent={"center"} minW={{sm: "100%", md: "448px"}} alignItems={"center"}>
+                <SimpleGrid templateColumns={{ sm: "repeat(2, 130px)", md: "repeat(2, 200px)" }} gap={"15px"}>
                   <GridItem>
                     <Image src={pokemonData!.sprites?.front_default} alt="Front Default" w={{ sm: "130px", md: '200px' }} h={{ sm: "130px", md: '200px' }} />
                   </GridItem>
