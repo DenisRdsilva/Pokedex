@@ -127,7 +127,7 @@ export default function Home() {
                   <button onClick={() => {
                     getDetails(pokemon.id);
                     onOpen();
-                  }}><Card justifyContent='center' mb={{ sm: '0px', md: '30px' }} bg='black' w={{ sm: 'auto', md: '190px' }} h={{ sm: 'auto', md: '255px' }} borderRadius='12px' boxShadow={'0 5px 10px rgba(0, 0, 0, 0.5)'}>
+                  }}><Card justifyContent='center' mb={{ sm: '0px', md: '30px' }} bg='black' w={{ sm: 'auto', md: '180px' }} h={{ sm: 'auto', md: '255px' }} borderRadius='12px' boxShadow={'0 5px 10px rgba(0, 0, 0, 0.5)'}>
                       <Flex direction={{ sm: 'row', md: 'column' }}>
                         <Image
                           border='solid 11px lightgray'
@@ -160,12 +160,13 @@ export default function Home() {
       </Flex >
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent bg={{sm:"lighgray", lg: "transparent"}} my="auto">
+        <ModalContent bg={{ sm: "lighgray", lg: "transparent" }} my="auto">
           {/* <ModalBody> */}
-            {isLoading && <Text fontSize={'18px'}>Carregando...</Text>}
-            {!isLoading && pokemonData && <Flex direction={{sm: 'column', lg: 'row' }} gap={"15px"} justifyContent="center">
-              {/* <Flex direction={'column'} alignItems='center' justifyContent="center"> */}
-                <Center><Card p="20px" minW={{sm: "100%", md: "448px"}} alignItems={'start'}>
+            <Card p={{sm:"10px", md: "0"}} background={'lightgray'}>
+              {isLoading && <Text fontSize={'18px'}>Carregando...</Text>}
+              {!isLoading && pokemonData && <Flex direction='column' gap={"15px"} justifyContent="center">
+                {/* <Flex direction={'column'} alignItems='center' justifyContent="center"> */}
+                <Center><Card p="20px" minW={{ sm: "100%", md: "448px" }} alignItems={'start'}>
                   <Text fontSize={'28px'} pb={"10px"} fontWeight='600'>{pokemonData!.name?.toUpperCase()}</Text>
                   <Text textAlign={'center'} fontSize={'22px'}>Typing:</Text>
                   <Flex direction="row" justifyContent={"space-evenly"} gap={"10px"}>
@@ -180,24 +181,25 @@ export default function Home() {
                     ))}
                   </Flex>
                 </Card></Center>
-              {/* </Flex> */}
-              <Card m="25px" justifyContent={"center"} minW={{sm: "100%", md: "448px"}} alignItems={"center"}>
-                <SimpleGrid templateColumns={{ sm: "repeat(2, 130px)", md: "repeat(2, 200px)" }} gap={"15px"}>
-                  <GridItem>
-                    <Image src={pokemonData!.sprites?.front_default} alt="Front Default" w={{ sm: "130px", md: '200px' }} h={{ sm: "130px", md: '200px' }} />
-                  </GridItem>
-                  <GridItem>
-                    <Image src={pokemonData!.sprites?.front_shiny} alt="Front Shiny" w={{ sm: "130px", md: '200px' }} h={{ sm: "130px", md: '200px' }} />
-                  </GridItem>
-                  <GridItem>
-                    <Image src={pokemonData!.sprites?.back_default} alt="Back Default" w={{ sm: "130px", md: '200px' }} h={{ sm: "130px", md: '200px' }} />
-                  </GridItem>
-                  <GridItem>
-                    <Image src={pokemonData!.sprites?.back_shiny} alt="Back Shiny" w={{ sm: "130px", md: '200px' }} h={{ sm: "130px", md: '200px' }} />
-                  </GridItem>
-                </SimpleGrid>
-              </Card>
-            </Flex>}
+                {/* </Flex> */}
+                <Card justifyContent={"center"} minW={{ sm: "100%", md: "448px" }} alignItems={"center"}>
+                  <SimpleGrid templateColumns={{ sm: "repeat(2, 130px)", md: "repeat(2, 180px)" }} gap={"10px"}>
+                    <GridItem>
+                      <Image src={pokemonData!.sprites?.front_default} alt="Front Default" w={{ sm: "130px", md: '180px' }} h={{ sm: "130px", md: '180px' }} />
+                    </GridItem>
+                    <GridItem>
+                      <Image src={pokemonData!.sprites?.front_shiny} alt="Front Shiny" w={{ sm: "130px", md: '180px' }} h={{ sm: "130px", md: '180px' }} />
+                    </GridItem>
+                    <GridItem>
+                      <Image src={pokemonData!.sprites?.back_default} alt="Back Default" w={{ sm: "130px", md: '180px' }} h={{ sm: "130px", md: '180px' }} />
+                    </GridItem>
+                    <GridItem>
+                      <Image src={pokemonData!.sprites?.back_shiny} alt="Back Shiny" w={{ sm: "130px", md: '180px' }} h={{ sm: "130px", md: '180px' }} />
+                    </GridItem>
+                  </SimpleGrid>
+                </Card>
+              </Flex>}
+            </Card>
           {/* </ModalBody> */}
         </ModalContent>
       </Modal>
