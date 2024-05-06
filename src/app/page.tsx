@@ -31,7 +31,7 @@ export default function Home() {
   }, [regions]);
 
   useEffect(() => {
-    initialData(poke, minData, maxData); 
+    initialData(poke, minData, maxData);
   }), [minData, maxData];
 
   function initialData(array, start, end) {
@@ -130,15 +130,15 @@ export default function Home() {
               ) : null}
             </Select>
           </Flex>
-          <Flex w='100%' mt={{ sm: '40px', lg: '0' }} direction="column" justifyContent={'center'} alignItems={'center'}>
-            <SimpleGrid templateColumns={{ sm: '1fr', md: 'repeat(3, 1fr)', lg: 'repeat(4, 1fr)', xl: 'repeat(5, 1fr)' }} gap={{sm: "15px", md:'25px', lg:"25px"}}>
-              {isLoading && <Text fontSize={'18px'}>Carregando...</Text>}
-              {!isLoading && initData ? initData.map((pokemon) => (
+          {isLoading && <Text fontSize={'18px'}>Carregando...</Text>}
+          {!isLoading && <Flex w='100%' mt={{ sm: '40px', lg: '0' }} direction="column" justifyContent={'center'} alignItems={'center'}>
+            <SimpleGrid templateColumns={{ sm: '1fr', md: 'repeat(3, 1fr)', lg: 'repeat(4, 1fr)', xl: 'repeat(5, 1fr)' }} gap={{ sm: "15px", md: '25px', lg: "25px" }}>
+              {initData ? initData.map((pokemon) => (
                 <GridItem key={pokemon.id}>
                   <button onClick={() => {
                     getDetails(pokemon.id);
                     onOpen();
-                  }}><Card justifyContent='center' mb={{ sm: '0px', md: '30px' }} bg='black' w={{ sm: 'auto', md: '180px' }} h={{ sm: 'auto', md: '255px' }} borderRadius='12px' boxShadow={'0 5px 10px rgba(0, 0, 0, 0.5)'}>
+                  }}><Card justifyContent='center' mb={{ sm: '0px', md: '30px' }} bg='black' w={{ sm: 'auto', md: '200px' }} h={{ sm: 'auto', md: '255px' }} borderRadius='12px' boxShadow={'0 5px 10px rgba(0, 0, 0, 0.5)'}>
                       <Flex direction={{ sm: 'row', md: 'column' }}>
                         <Image
                           border='solid 11px lightgray'
@@ -166,17 +166,17 @@ export default function Home() {
                 </GridItem>
               )) : null}
             </SimpleGrid>
-            <Flex gap="15px" py={{sm: "20px", md: 0, lg: 0}}>
-              {minData > 0 &&<Button onClick={() => { 
-                setMinData(minData-10);
-                setMaxData(maxData-10);
-                }}>Back</Button>}
-              {maxData < maxLimit &&<Button onClick={() => { 
-                setMinData(minData+10);
-                setMaxData(maxData+10);
-                }}>More</Button>}
-            </Flex>
-          </Flex>
+            {initData &&<Flex gap="15px" py={{ sm: "20px", md: 0, lg: 0 }}>
+              {minData > 0 && <Button onClick={() => {
+                setMinData(minData - 10);
+                setMaxData(maxData - 10);
+              }}>Back</Button>}
+              {maxData < maxLimit && <Button onClick={() => {
+                setMinData(minData + 10);
+                setMaxData(maxData + 10);
+              }}>More</Button>}
+            </Flex>}
+          </Flex>}
         </Flex>
       </Flex >
       <Modal isOpen={isOpen} onClose={onClose}>
